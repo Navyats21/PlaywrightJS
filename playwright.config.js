@@ -20,20 +20,28 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     trace: 'on',
+     baseURL: 'https://parabank.parasoft.com',
+  
   },
 
   /* Configure projects for major browsers */
   projects: [
-    {
-      name: 'Chrome',
-      use: { ...devices['Desktop Chrome'],
-        channel : 'chrome',
-        headless : false,
-       
-       },
-    }
 
-   
+// LOGIN SETUP PROJECT
+    {
+      name: 'setup',
+      // runs auth.setup.js first
+      testMatch: /.*\.setup\.js/,
+    },
+
+    {
+      name: 'chromium',
+      use: {
+        channel : 'chrome',  
+        storageState: './cookies.json',
+       },
+       dependencies: ['setup'],      
+    } 
   ],
 
   

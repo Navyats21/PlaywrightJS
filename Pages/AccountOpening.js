@@ -1,4 +1,4 @@
-import {Locator,expect} from '@playwright/test'
+import {expect} from '@playwright/test'
 
 export class AccountOpening {
     constructor(page) {
@@ -11,6 +11,7 @@ export class AccountOpening {
         this.accountNo = this.page.locator('#openAccountResult #newAccountId');
         this.accountDropDown = this.page.locator('#rightPanel #fromAccountId');
     }
+
 
     async SelectOpenNewAccount(){
         await this.openNewAccountLink.click();

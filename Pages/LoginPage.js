@@ -1,4 +1,4 @@
-import {test,Locator,Page,expect} from '@playwright/test';
+import {expect} from '@playwright/test'
 const fs = require('fs');  // Import fs to interact with the file system
 const path = require('path'); 
 
@@ -27,7 +27,18 @@ export class LoginPage {
         await this.StoreCookies();
     }
 
-    async StoreCookies(){
+    async StoreCookies(){ 
+         const filePath = path.join(__dirname, '../cookies.json');
+         try {
+        await this.page.context().storageState({
+            path: filePath,
+        });
+        console.log(`Auth state stored at ${filePath}`);
+    } catch (err) {
+        console.error('Error saving auth state:', err);
+    }}
+
+   /* async StoreCookies(){
         const cookies = await this.page.context().cookies();
         console.log('Captured Cookies:', cookies);     
        if (cookies.length === 0) {
@@ -42,7 +53,7 @@ export class LoginPage {
         } catch (err) {
             console.error('Error writing cookies to file:', err);
         }
-    }
+    }*/
 
     //waiting for login API to complete
     async waitForLoginApiResponse() {
